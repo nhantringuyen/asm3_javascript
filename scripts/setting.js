@@ -9,7 +9,8 @@ const user = userArr.find((u) => u.username === storedUser.username);
 const newsPerPage = document.getElementById("input-page-size");
 const newsCategory = document.getElementById("input-category");
 const btnSubmit = document.getElementById("btn-submit");
-
+newsPerPage.value = user.newsPerPage;
+newsCategory.value = user.newsCategory;
 /**
  * validate data
  * @param perPage string
@@ -33,6 +34,6 @@ btnSubmit.addEventListener("click", function () {
     const index = userArr.findIndex((u) => u.username === storedUser.username);
     userArr[index] = user;
     saveToStorage(KEY, JSON.stringify(userArr));
-    alert("Updated setting")
+    alert("Updated setting");
   }
 });

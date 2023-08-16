@@ -16,6 +16,17 @@ const inputTask = document.getElementById("input-task");
 const addBtn = document.getElementById("btn-add");
 const taskListContainer = document.getElementById("todo-list");
 const currentUser = getCurrentUser();
+
+/**
+ *
+ * @param taskInput string
+ * @return {boolean}
+ */
+function isExistTag(taskInput) {
+  return todoArr.some(
+    (task) => task.task === taskInput && task.owner === currentUser
+  );
+}
 /**
  * validate data
  * @param task string
@@ -24,6 +35,10 @@ const currentUser = getCurrentUser();
 function validateData(task) {
   if (task === "") {
     alert("Please input task");
+    return false;
+  }
+  if (isExistTag(task)) {
+    alert("Task is Exist");
     return false;
   }
   return true;
@@ -80,9 +95,10 @@ taskListContainer.addEventListener("click", function (event) {
       parentElement.parentNode.children,
       parentElement
     );
+    const taskText = parentElement.childNodes[0].nodeValue;
     /*--Find the index of the task in todoArr based on its index and owner matching the current user's username--*/
-    const taskToDelete = todoArr.find(
-      (task, index) => index === taskIndex && task.owner === currentUser
+    const taskToDelete = todoArr.findIndex(
+      (task) => task.task === taskText && task.owner === currentUser
     );
     if (taskToDelete !== -1) {
       /*------------------------Remove the task from todoArr using splice()---------------------------------*/
@@ -98,14 +114,11 @@ taskListContainer.addEventListener("click", function (event) {
 taskListContainer.addEventListener("click", function (event) {
   if (event.target.nodeName === "LI") {
     const liElement = event.target;
-    const allLiElements = Array.from(
-      taskListContainer.getElementsByTagName("li")
-    );
-    const taskIndex = allLiElements.indexOf(liElement);
+    const taskText = liElement.childNodes[0].nodeValue;
     const currentUser = getCurrentUser();
     /*--Find the task in todoArr based on its index and owner matching the current user's username--*/
     const taskToUpdate = todoArr.find(
-      (task, index) => index === taskIndex && task.owner === currentUser
+      (task) => task.task === taskText && task.owner === currentUser
     );
     if (taskToUpdate !== -1) {
       /*------------------------Toggle the isDone property of the found task-----------------------*/

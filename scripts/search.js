@@ -111,7 +111,7 @@ async function searchGnew(keyword) {
       // Check whether to display the "Next" button
       nextButton.style.display = currentPage === totalPages ? "none" : "inline";
       console.log((totalPages > 1));
-      navPageNum.classList.remove("d-none", "d-blockv");
+      navPageNum.classList.remove("d-none", "d-block");
       navPageNum.classList.add((totalPages > 1) ? "d-block" : "d-none");
     }
   } catch (e) {
